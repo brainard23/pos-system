@@ -37,4 +37,22 @@ const categorySchema = new Schema({
 categorySchema.index({ name: 'text' });
 categorySchema.index({ parent: 1 });
 
+// Add virtual for subcategories
+categorySchema.virtual('subcategories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'parent'
+});
+
+// Add virtual for products
+categorySchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'category'
+});
+
+// Enable virtuals in JSON
+categorySchema.set('toJSON', { virtuals: true });
+categorySchema.set('toObject', { virtuals: true });
+
 export default mongoose.model<ICategory>('Category', categorySchema); 

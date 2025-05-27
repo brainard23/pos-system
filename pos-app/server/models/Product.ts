@@ -5,7 +5,7 @@ export interface IProduct extends Document {
   description: string;
   sku: string;
   barcode?: string;
-  category: string;
+  category: mongoose.Types.ObjectId;
   price: number;
   cost: number;
   stock: number;
@@ -40,7 +40,8 @@ const productSchema = new Schema({
     trim: true
   },
   category: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
     required: [true, 'Category is required']
   },
   price: {
@@ -87,5 +88,16 @@ const productSchema = new Schema({
 productSchema.index({ name: 'text', description: 'text', sku: 'text' });
 productSchema.index({ category: 1 });
 productSchema.index({ supplier: 1 });
+
+// Add middleware to populate category and supplier when querying
+productSchema.pre('find', function() {
+  this.populate('category', 'name description')
+       .populate('supplier', 'name email phone');
+});
+
+productSchema.pre('findOne', function() {
+  this.populate('category', 'name description')
+       .populate('supplier', 'name email phone');
+});
 
 export default mongoose.model<IProduct>('Product', productSchema); 

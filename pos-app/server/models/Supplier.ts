@@ -2,7 +2,6 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ISupplier extends Document {
   name: string;
-  contactPerson: string;
   email: string;
   phone: string;
   address: {
@@ -12,8 +11,6 @@ export interface ISupplier extends Document {
     country: string;
     zipCode: string;
   };
-  taxId?: string;
-  paymentTerms: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -23,11 +20,6 @@ const supplierSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Supplier name is required'],
-    trim: true
-  },
-  contactPerson: {
-    type: String,
-    required: [true, 'Contact person is required'],
     trim: true
   },
   email: {
@@ -65,15 +57,6 @@ const supplierSchema = new Schema({
       required: [true, 'ZIP code is required']
     }
   },
-  taxId: {
-    type: String,
-    trim: true
-  },
-  paymentTerms: {
-    type: String,
-    required: [true, 'Payment terms are required'],
-    enum: ['immediate', 'net15', 'net30', 'net60']
-  },
   isActive: {
     type: Boolean,
     default: true
@@ -85,5 +68,16 @@ const supplierSchema = new Schema({
 // Create indexes for better query performance
 supplierSchema.index({ name: 'text', email: 'text' });
 supplierSchema.index({ 'address.city': 1, 'address.country': 1 });
+
+// Add virtual for products
+supplierSchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'supplier'
+});
+
+// Enable virtuals in JSON
+supplierSchema.set('toJSON', { virtuals: true });
+supplierSchema.set('toObject', { virtuals: true });
 
 export default mongoose.model<ISupplier>('Supplier', supplierSchema); 

@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Products from './components/Products';
 
 // Placeholder components for other routes
-const Products = () => <div>Products Page (Coming Soon)</div>;
 const Sales = () => <div>Sales Page (Coming Soon)</div>;
 const Transactions = () => <div>Transactions Page (Coming Soon)</div>;
 
