@@ -785,7 +785,7 @@ export default function Products() {
                 <TableHead>SKU</TableHead>
                 <TableHead>Stock</TableHead>
                 <TableHead>Price</TableHead>
-                <TableHead>Cost</TableHead>
+                <TableHead>Markup</TableHead>
                 <TableHead>Supplier</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Unit</TableHead>
@@ -814,7 +814,7 @@ export default function Products() {
                     <TableCell>{product.sku}</TableCell>
                     <TableCell>{product.stock}</TableCell>
                     <TableCell>₱{product.price.toFixed(2)}</TableCell>
-                    <TableCell>₱{product.cost.toFixed(2)}</TableCell>
+                    <TableCell>%{product.cost * 100}</TableCell>
                     <TableCell>{product.supplier.name}</TableCell>
                     <TableCell>{product.category.name}</TableCell>
                     <TableCell>{product.unit}</TableCell>

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-
+import { JwtPayload } from 'jsonwebtoken';
 // Extend Express Request type to include user
 declare global {
   namespace Express {
@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const protect = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     let token;
 
@@ -20,20 +20,21 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     }
 
     if (!token) {
-      return res.status(401).json({ message: 'Not authorized, no token' });
+      res.status(401).json({ message: 'Not authorized, no token' });
+      return;
     }
 
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
 
-    // Get user from token
     const user = await User.findById(decoded.id).select('-password');
     if (!user) {
-      return res.status(401).json({ message: 'Not authorized, user not found' });
+      res.status(401).json({ message: 'Not authorized, user not found' });
+      return;
     }
 
     if (!user.isActive) {
-      return res.status(401).json({ message: 'Not authorized, user is inactive' });
+      res.status(401).json({ message: 'Not authorized, user is inactive' });
+      return;
     }
 
     req.user = user;
