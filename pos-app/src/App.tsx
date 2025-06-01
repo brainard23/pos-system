@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Products from './components/Products';
+import Transaction from './pages/Transaction';
 
 // Placeholder components for other routes
 const Sales = () => <div>Sales Page (Coming Soon)</div>;
-const Transactions = () => <div>Transactions Page (Coming Soon)</div>;
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products" element={<Products />} />
         <Route path="/sales" element={<Sales />} />
-        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/transactions" element={<Transaction />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

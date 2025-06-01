@@ -361,7 +361,6 @@ export default function Products() {
     <Layout>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Products</h1>
           <div className="flex gap-4">
             <Input
               type="search"
