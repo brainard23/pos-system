@@ -1,7 +1,14 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
-import Supplier from '../models/Supplier';
+import express from 'express';
+import { body } from 'express-validator';
 import { protect as auth } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import {
+  getSuppliers,
+  getSupplier,
+  createSupplier,
+  updateSupplier,
+  deleteSupplier
+} from '../controllers/supplierController';
 
 const router = express.Router();
 
@@ -21,46 +28,11 @@ const validateSupplier = [
   body('address.zipCode').trim().notEmpty().withMessage('ZIP code is required'),
 ];
 
-// Get all suppliers
-router.get('/', auth, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const suppliers = await Supplier.find().sort({ name: 1 });
-    res.json(suppliers);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Create supplier
-router.post('/', [auth, validateSupplier], async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
-      return;
-    }
-
-    const { name, email, phone, address } = req.body;
-
-    // Check if supplier with email already exists
-    const existingSupplier = await Supplier.findOne({ email });
-    if (existingSupplier) {
-      res.status(400).json({ message: 'Supplier with this email already exists' });
-      return;
-    }
-
-    const supplier = new Supplier({
-      name,
-      email,
-      phone,
-      address
-    });
-
-    await supplier.save();
-    res.status(201).json(supplier);
-  } catch (error) {
-    next(error);
-  }
-});
+// Routes
+router.get('/', auth, getSuppliers);
+router.get('/:id', auth, getSupplier);
+router.post('/', [auth, validate(validateSupplier)], createSupplier);
+router.put('/:id', [auth, validate(validateSupplier)], updateSupplier);
+router.delete('/:id', auth, deleteSupplier);
 
 export default router; 

@@ -1,0 +1,79 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+🔄 Project Awareness & Context
+Always read PLANNING.md at the start of a new conversation to understand the project's architecture, goals, style, and constraints.
+
+Check TASK.md before starting a new task. If the task isn’t listed, add it with a brief description and today's date.
+
+Follow naming conventions, file structure, and architectural patterns as outlined in PLANNING.md.
+
+🧱 Code Structure & Modularity
+Keep files under 500 lines of code. If approaching this limit, split the code into modules or helper files.
+
+Group code into clearly separated modules based on feature or responsibility.
+
+Identify reusable components and place them in src/components to reduce redundancy.
+
+Create custom hooks for API calls or any reusable logic that benefits from React hooks.
+
+Place commonly used interfaces in src/types.
+
+Centralize API calls (CRUD operations) inside src/services.
+
+Use consistent, clear imports (prefer relative imports).
+
+Organize feature-specific pages like Product, Transactions, Dashboard, etc., in src/pages.
+
+🧪 Testing & Reliability
+Always write unit tests using Pytest for new features (functions, classes, routes, etc.).
+
+After logic updates, review and update affected tests.
+
+Place tests inside a /tests folder mirroring the main structure.
+
+Each function or feature should have:
+
+One test for normal usage
+
+One for an edge case
+
+One for failure behavior
+
+✅ Task Completion
+Update TASK.md immediately when a task is completed.
+
+Log newly discovered tasks or TODOs under a "Discovered During Work" section in TASK.md.
+
+📎 Style & Conventions
+Use TypeScript as the main language.
+
+Follow Prettier for consistent code formatting.
+
+Use Express for building APIs.
+
+Document functions using JSDoc-style comments:
+
+/**
+ * Adds two numbers together.
+ * @param a The first number.
+ * @param b The second number.
+ * @returns The sum of a and b.
+ */
+function add(a: number, b: number): number {
+  return a + b;
+}
+📚 Documentation & Explainability
+Update README.md when adding new features, modifying dependencies, or changing setup instructions.
+
+Comment non-obvious code to ensure clarity for mid-level developers.
+
+For complex logic, include inline # Reason: comments to explain why the code exists, not just what it does.
+
+🧠 AI Behavior Rules
+Do not assume missing context. Ask questions when unsure.
+Do not hallucinate libraries or functions. Use only well-known, verified packages.
+Always verify file paths and module names before using them.
+Do not delete or overwrite existing code unless explicitly instructed or if it’s part of a defined task in TASK.md.
