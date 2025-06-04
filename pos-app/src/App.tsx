@@ -1,25 +1,42 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Products from './components/Products';
-import Transaction from './pages/Transaction';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import ProductsPage from './pages/product';
+import Layout from './components/Layout';
 
-// Placeholder components for other routes
-const Sales = () => <div>Sales Page (Coming Soon)</div>;
-
-const App = () => {
+function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/sales" element={<Sales />} />
-        <Route path="/transactions" element={<Transaction />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/products" element={<ProductsPage />} />
+        </Routes>
+      </Layout>
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+          success: {
+            duration: 2000,
+            iconTheme: {
+              primary: '#4ade80',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            duration: 4000,
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
     </Router>
   );
-};
+}
 
 export default App;

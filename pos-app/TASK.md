@@ -8,6 +8,14 @@
   - Added validation middleware
   - Separated business logic from routes
   - Added proper error handling and type safety
+- [x] Enhance Products.tsx component content should be transfered in pages folder
+  - Moved Products component to pages folder
+  - Created reusable form components
+  - Implemented custom hooks for API calls
+  - Separated types into their own files
+  - Improved code organization and maintainability
+- [ ] Enhance the Api calls in the Product page apply our rules in api calling
+- [ ] setup unit test use Jest
 - [ ] Enhance Products.tsx, remove repetitive components and make it reusable
 - [ ] Only call fetch api for supplier and catigory when creating a product
 - [ ] create custom hooks 
@@ -23,6 +31,13 @@
 ## 🛠 Discovered During Work
 - [ ] Add pagination to product list
 - [ ] Improve error handling in product service
+- [ ] Add loading states for supplier and category forms
+- [ ] Implement form validation using a form library (e.g., react-hook-form)
+- [ ] Add unit tests for custom hooks
+- [ ] Add unit tests for form components
+
+## Unit test
+- [ ] do unit test for product, categories and product
 
 ## ✅ Completed Tasks
 - [x] Setup project scaffolding

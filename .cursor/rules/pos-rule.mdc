@@ -11,6 +11,10 @@ Check TASK.md before starting a new task. If the task isn’t listed, add it wit
 Follow naming conventions, file structure, and architectural patterns as outlined in PLANNING.md.
 
 🧱 Code Structure & Modularity
+the project is located at pos-app and the backend is end the pos-app/server. always check where to install packages to avoid wrong installation. 
+
+always follow the folder structure  
+
 Keep files under 500 lines of code. If approaching this limit, split the code into modules or helper files.
 
 Group code into clearly separated modules based on feature or responsibility.
@@ -22,6 +26,8 @@ Create custom hooks for API calls or any reusable logic that benefits from React
 Place commonly used interfaces in src/types.
 
 Centralize API calls (CRUD operations) inside src/services.
+
+use yarn when installing, updating, and removing packages
 
 Use consistent, clear imports (prefer relative imports).
 
