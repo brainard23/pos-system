@@ -14,7 +14,8 @@
   - Implemented custom hooks for API calls
   - Separated types into their own files
   - Improved code organization and maintainability
-- [ ] add a dashboard page. this page contain sales, inventory, and other important KPI
+- [x] add a dashboard page. this page contain sales, inventory, and other important KPI
+- [ ] add a transaction page UI
 - [ ] Enhance the Api calls in the Product page apply our rules in api calling
 - [ ] setup unit test use Jest
 - [ ] Enhance Products.tsx, remove repetitive components and make it reusable
