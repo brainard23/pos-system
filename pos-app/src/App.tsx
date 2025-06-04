@@ -1,16 +1,45 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import ProductsPage from './pages/product';
 import Layout from './components/Layout';
+import ProductsPage from './pages/product';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { isAuthenticated } from './services/authService';
+import LoginPage from './pages/Login';
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/products" element={<ProductsPage />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* Public routes */}
+        <Route 
+          path="/login" 
+          element={
+            isAuthenticated() ? (
+              <Navigate to="/" replace />
+            ) : (
+              <LoginPage />
+            )
+          } 
+        />
+
+        {/* Protected routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Outlet />
+              </Layout>
+            </ProtectedRoute>
+          }
+        >
+          <Route path="products" element={<ProductsPage />} />
+          {/* Add other protected routes here */}
+        </Route>
+
+        {/* Catch all route - redirect to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
       <Toaster 
         position="top-right"
         toastOptions={{

@@ -11,8 +11,7 @@ import { Loader2 } from 'lucide-react';
 
 export interface Column<T> {
   header: string;
-  accessorKey: keyof T | ((row: T) => string | number);
-  cell?: (row: T) => ReactNode;
+  accessorKey: keyof T | ((row: T) => string | number | ReactNode);
 }
 
 interface CustomTableProps<T> {
@@ -22,31 +21,34 @@ interface CustomTableProps<T> {
   emptyMessage?: string;
 }
 
-export function CustomTable<T>({
-  columns,
-  data,
-  isLoading = false,
-  emptyMessage = 'No data found',
-}: CustomTableProps<T>) {
-  const renderCell = (row: T, column: Column<T>): ReactNode => {
-    if (column.cell) {
-      return column.cell(row);
+export function CustomTable<T>({ columns, data, isLoading, emptyMessage = 'No data available' }: CustomTableProps<T>) {
+  const renderCell = (row: T, accessor: Column<T>['accessorKey']): ReactNode => {
+    if (typeof accessor === 'function') {
+      return accessor(row);
     }
-
-    const value = typeof column.accessorKey === 'function'
-      ? column.accessorKey(row)
-      : row[column.accessorKey];
-
-    // Format numbers to 2 decimal places if they are numbers
-    if (typeof value === 'number') {
-      return value.toFixed(2);
-    }
-
+    const value = row[accessor];
+    // Convert any value to string for display
     return String(value);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-8">
+        <Loader2 className="w-6 h-6 animate-spin" />
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        {emptyMessage}
+      </div>
+    );
+  }
+
   return (
-    <div className="border rounded-lg">
+    <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
@@ -56,29 +58,15 @@ export function CustomTable<T>({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading ? (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="text-center py-4">
-                <Loader2 className="w-6 h-6 animate-spin mx-auto" />
-              </TableCell>
+          {data.map((row, rowIndex) => (
+            <TableRow key={rowIndex}>
+              {columns.map((column, colIndex) => (
+                <TableCell key={colIndex}>
+                  {renderCell(row, column.accessorKey)}
+                </TableCell>
+              ))}
             </TableRow>
-          ) : data.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="text-center py-4">
-                {emptyMessage}
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
-                {columns.map((column, colIndex) => (
-                  <TableCell key={colIndex}>
-                    {renderCell(row, column)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          )}
+          ))}
         </TableBody>
       </Table>
     </div>

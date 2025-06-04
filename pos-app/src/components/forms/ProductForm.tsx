@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
@@ -18,14 +18,21 @@ interface ProductFormProps {
   onSubmit: (product: NewProduct) => Promise<void>;
   isLoading: boolean;
   onCancel: () => void;
+  initialData?: Partial<NewProduct>;
 }
 
-export function ProductForm({ categories, suppliers, onSubmit, isLoading, onCancel }: ProductFormProps) {
-  const [product, setProduct] = useState<NewProduct>({
+export function ProductForm({ 
+  categories, 
+  suppliers, 
+  onSubmit, 
+  isLoading, 
+  onCancel,
+  initialData 
+}: ProductFormProps) {
+  const [product, setProduct] = useState<Omit<NewProduct, 'barcode'> & { barcode?: string }>({
     name: '',
     description: '',
     sku: '',
-    barcode: '',
     category: '',
     price: '',
     cost: 0,
@@ -33,11 +40,27 @@ export function ProductForm({ categories, suppliers, onSubmit, isLoading, onCanc
     minStock: '',
     supplier: '',
     unit: 'piece',
+    ...initialData,
   });
+
+  // Update form when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setProduct(prev => ({
+        ...prev,
+        ...initialData,
+      }));
+    }
+  }, [initialData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await onSubmit(product);
+    // Only include barcode if it has a value
+    const productToSubmit: NewProduct = {
+      ...product,
+      barcode: product.barcode?.trim() || undefined,
+    };
+    await onSubmit(productToSubmit);
   };
 
   return (
@@ -70,6 +93,16 @@ export function ProductForm({ categories, suppliers, onSubmit, isLoading, onCanc
           value={product.description}
           onChange={(e) => setProduct({ ...product, description: e.target.value })}
           required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="barcode">Barcode (Optional)</Label>
+        <Input
+          id="barcode"
+          value={product.barcode || ''}
+          onChange={(e) => setProduct({ ...product, barcode: e.target.value })}
+          placeholder="Enter barcode if available"
         />
       </div>
 
@@ -187,7 +220,7 @@ export function ProductForm({ categories, suppliers, onSubmit, isLoading, onCanc
           Cancel
         </Button>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Adding...' : 'Add Product'}
+          {isLoading ? 'Saving...' : initialData ? 'Update Product' : 'Add Product'}
         </Button>
       </div>
     </form>

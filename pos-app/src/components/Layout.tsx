@@ -204,7 +204,7 @@ const Layout = ({ children }: LayoutProps) => {
             : "md:pl-64"
         )}
       >
-        <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="container px-6">
           {children}
         </div>
       </main>
