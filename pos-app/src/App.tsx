@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import { Toaster } from 'react-hot-toast';
 import Layout from './components/Layout';
 import ProductsPage from './pages/product';
+import DashboardPage from './pages/Dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { isAuthenticated } from './services/authService';
 import LoginPage from './pages/Login';
@@ -15,7 +16,7 @@ function App() {
           path="/login" 
           element={
             isAuthenticated() ? (
-              <Navigate to="/" replace />
+              <Navigate to="/dashboard" replace />
             ) : (
               <LoginPage />
             )
@@ -33,12 +34,14 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardPage />} />
           <Route path="products" element={<ProductsPage />} />
           {/* Add other protected routes here */}
         </Route>
 
-        {/* Catch all route - redirect to home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Catch all route - redirect to dashboard */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
       <Toaster 
         position="top-right"
