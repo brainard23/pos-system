@@ -63,9 +63,9 @@ export function TransactionCart({
         <div className="border rounded-md h-[300px] flex flex-col">
           {/* Header */}
           <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
-            <div className="col-span-5">Product</div>
+            <div className="col-span-3">Product</div>
             <div className="col-span-2">Price</div>
-            <div className="col-span-2">Quantity</div>
+            <div className="col-span-4">Quantity</div>
             <div className="col-span-2">Subtotal</div>
             <div className="col-span-1"></div>
           </div>
@@ -80,14 +80,14 @@ export function TransactionCart({
               <div className="divide-y">
                 {items.map((item) => (
                   <div key={item.product._id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-muted/50">
-                    <div className="col-span-5 font-medium">{item.product.name}</div>
+                    <div className="col-span-3 font-medium">{item.product.name}</div>
                     <div className="col-span-2">${item.price.toFixed(2)}</div>
-                    <div className="col-span-2">
+                    <div className="col-span-4">
                       <div className="flex items-center space-x-2">
                         <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
+                          // variant="outline"
+                          // size="icon"
+                          // className="h-8 w-8"
                           onClick={() => onUpdateQuantity(item.product._id, item.quantity - 1)}
                           disabled={item.quantity <= 1}
                         >
@@ -95,9 +95,7 @@ export function TransactionCart({
                         </Button>
                         <span className="w-8 text-center">{item.quantity}</span>
                         <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
+                    
                           onClick={() => onUpdateQuantity(item.product._id, item.quantity + 1)}
                           disabled={item.quantity >= item.product.stock}
                         >

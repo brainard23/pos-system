@@ -87,7 +87,7 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
               {/* Header */}
               <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
                 <div className="col-span-4">Product</div>
-                <div className="col-span-2">SKU</div>
+                <div className="col-span-2">Barcode</div>
                 <div className="col-span-2">Price</div>
                 <div className="col-span-2">Stock</div>
                 <div className="col-span-2">Category</div>
@@ -113,8 +113,8 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
                           onClick={() => onSelectProduct(product)}
                     
                         >
-                          <div className="col-span-4 font-medium">{product.name}</div>
-                          <div className="col-span-2 text-sm text-muted-foreground">{product.sku}</div>
+                          <div className="col-span-4 font-medium truncate">{product.name}</div>
+                          <div className="col-span-2 text-sm text-muted-foreground truncate">{product.barcode}</div>
                           <div className="col-span-2 font-medium">${product.price.toFixed(2)}</div>
                           <div className="col-span-2 text-sm text-muted-foreground">
                             {product.stock} {product.unit}
