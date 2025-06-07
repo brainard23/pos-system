@@ -3,6 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Activity, DollarSign, Package, TrendingUp } from 'lucide-react';
 import { DashboardStats, ProfitData, ActivityItem } from '@/types/dashboard';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useDashboard } from '@/hooks/useDashboard';
+import { useEffect } from 'react';
 
 // Mock data for development
 const mockStats: DashboardStats = {
@@ -58,6 +60,13 @@ const mockActivity: ActivityItem[] = [
  * @returns The dashboard page component
  */
 export default function DashboardPage() {
+
+  // const { fetchData }  = useDashboard();
+
+  // useEffect(async () = {
+  //  await fetchData()
+  // }, [])
+
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold">Dashboard</h1>

@@ -16,8 +16,10 @@ export default function TransactionPage() {
     setCartItems(prev => {
       const existingItem = prev.find(item => item.product._id === product._id);
       if (existingItem) {
+        console.log(product, 'here')
+
         return prev.map(item =>
-          item.product._id === product._id
+          item.product._id === product._id && product.stock > item.quantity 
             ? {
                 ...item,
                 quantity: item.quantity + 1,
