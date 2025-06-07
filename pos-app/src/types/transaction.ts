@@ -1,6 +1,6 @@
 import { Product } from './product';
 
-export type PaymentMethod = 'cash' | 'credit_card' | 'visa';
+export type PaymentMethod = 'cash' | 'card' | 'credit_card';
 
 export interface TransactionItem {
   product: Product;
@@ -30,7 +30,11 @@ export interface Transaction {
 }
 
 export interface NewTransaction {
-  items: Omit<TransactionItem, 'subtotal'>[];
+  items: {
+    product: string;
+    quantity: number;
+    price: number;
+  }[];
   discountCode?: string;
   paymentMethod: PaymentMethod;
 }

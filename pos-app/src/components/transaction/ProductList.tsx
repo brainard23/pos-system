@@ -68,7 +68,7 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
                   <TabsTrigger
                     key={category}
                     value={category}
-                    className="capitalize"
+                    className="capitalize mr-1"
                   >
                     {category}
                   </TabsTrigger>
@@ -108,9 +108,10 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
                           key={product._id}
                           className={cn(
                             "grid grid-cols-12 gap-4 p-4 items-center hover:bg-muted/50 cursor-pointer",
-                            isSelected && "bg-primary/5"
+                            isSelected && "bg-primary/5", product.stock === 0 && "pointer-events-none text-red-500"
                           )}
                           onClick={() => onSelectProduct(product)}
+                    
                         >
                           <div className="col-span-4 font-medium">{product.name}</div>
                           <div className="col-span-2 text-sm text-muted-foreground">{product.sku}</div>

@@ -34,6 +34,7 @@ export async function fetchTransactions(filters?: TransactionFilters): Promise<T
  * @returns Promise containing the created transaction
  */
 export async function createTransaction(transaction: NewTransaction): Promise<Transaction> {
+  console.log('Creating transaction with data:', JSON.stringify(transaction, null, 2));
   const response = await fetch(`${API_URL}/transactions`, {
     method: 'POST',
     headers: {
@@ -45,6 +46,7 @@ export async function createTransaction(transaction: NewTransaction): Promise<Tr
 
   if (!response.ok) {
     const error = await response.json();
+    console.error('Transaction creation failed:', error);
     throw new Error(error.message || 'Failed to create transaction');
   }
 

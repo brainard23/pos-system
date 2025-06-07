@@ -69,7 +69,7 @@ export default function TransactionPage() {
     try {
       await addTransaction({
         items: cartItems.map(({ product, quantity, price }) => ({
-          product,
+          product: product._id,
           quantity,
           price,
         })),
@@ -78,7 +78,6 @@ export default function TransactionPage() {
       });
       setCartItems([]);
       setDiscountCode('');
-      toast.success('Transaction completed successfully');
     } catch (error) {
       toast.error('Failed to complete transaction');
     }

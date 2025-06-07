@@ -111,11 +111,19 @@ export const createTransaction = async (req: Request, res: Response, next: NextF
       };
     }));
 
+    // Calculate totals
+    const subtotal = processedItems.reduce((sum, item) => sum + item.subtotal, 0);
+    const discountAmount = discount ? (discount.type === 'percentage' ? (subtotal * discount.value / 100) : discount.value) : 0;
+    const total = subtotal - discountAmount;
+
     // Create transaction
     const transaction = new Transaction({
       items: processedItems,
       paymentMethod,
       discount,
+      subtotal,
+      discountAmount,
+      total,
       status: 'completed' // Auto-complete the transaction
     });
 
