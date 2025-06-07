@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Product } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Loader2, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BarcodeScanner } from './BarcodeScanner';
+import toast from 'react-hot-toast';
 
 interface ProductListProps {
   onSelectProduct: (product: Product) => void;
@@ -33,20 +35,32 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
     });
   }, [products, searchQuery, selectedCategory]);
 
+  const handleBarcodeScan = useCallback((barcode: string) => {
+    const product = products.find(p => p.barcode === barcode);
+    if (product) {
+      onSelectProduct(product);
+    } else {
+      toast.error('No product found with this barcode');
+    }
+  }, [products, onSelectProduct]);
+
   return (
-    <Card className="h-full">
+    <Card className="">
       <CardContent className="p-4">
         <div className="space-y-4">
-          {/* Search and Category Tabs */}
+          {/* Search, Barcode Scanner, and Category Tabs */}
           <div className="space-y-2">
-            <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8"
-              />
+            <div className="flex items-center space-x-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-8"
+                />
+              </div>
+              <BarcodeScanner onScan={handleBarcodeScan} />
             </div>
             <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
               <TabsList className="w-full justify-start">
@@ -69,38 +83,50 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
               <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredProducts.map(product => {
-                const isSelected = selectedProducts.some(p => p._id === product._id);
-                return (
-                  <Button
-                    key={product._id}
-                    variant="outline"
-                    className={cn(
-                      "h-auto p-4 flex flex-col items-start text-left space-y-2",
-                      isSelected && "border-primary bg-primary/5"
-                    )}
-                    onClick={() => onSelectProduct(product)}
-                  >
-                    <div className="font-medium">{product.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      SKU: {product.sku}
-                    </div>
-                    <div className="text-sm font-medium">
-                      ${product.price.toFixed(2)}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      Stock: {product.stock} {product.unit}
-                    </div>
-                  </Button>
-                );
-              })}
-            </div>
-          )}
+            <div className="border rounded-md h-[500px] flex flex-col">
+              {/* Header */}
+              <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
+                <div className="col-span-4">Product</div>
+                <div className="col-span-2">SKU</div>
+                <div className="col-span-2">Price</div>
+                <div className="col-span-2">Stock</div>
+                <div className="col-span-2">Category</div>
+              </div>
 
-          {!isLoading && filteredProducts.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
-              No products found
+              {/* Scrollable Items */}
+              <div className="flex-1 overflow-y-auto">
+                {filteredProducts.length === 0 ? (
+                  <div className="flex items-center justify-center h-full text-muted-foreground">
+                    No products found
+                  </div>
+                ) : (
+                  <div className="divide-y">
+                    {filteredProducts.map(product => {
+                      const isSelected = selectedProducts.some(p => p._id === product._id);
+                      return (
+                        <div
+                          key={product._id}
+                          className={cn(
+                            "grid grid-cols-12 gap-4 p-4 items-center hover:bg-muted/50 cursor-pointer",
+                            isSelected && "bg-primary/5"
+                          )}
+                          onClick={() => onSelectProduct(product)}
+                        >
+                          <div className="col-span-4 font-medium">{product.name}</div>
+                          <div className="col-span-2 text-sm text-muted-foreground">{product.sku}</div>
+                          <div className="col-span-2 font-medium">${product.price.toFixed(2)}</div>
+                          <div className="col-span-2 text-sm text-muted-foreground">
+                            {product.stock} {product.unit}
+                          </div>
+                          <div className="col-span-2 text-sm text-muted-foreground capitalize">
+                            {product.category.name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

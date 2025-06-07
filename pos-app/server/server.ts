@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import categoryRoutes from './routes/categories';
 import supplierRoutes from './routes/suppliers';
 import productRoutes from './routes/products';
+import transactionRoutes from './routes/transactions';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/suppliers', supplierRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
@@ -35,9 +37,9 @@ app.get('/', (req, res) => {
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 });
 

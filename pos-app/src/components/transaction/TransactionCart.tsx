@@ -60,59 +60,66 @@ export function TransactionCart({
       </CardHeader>
       <CardContent className="flex-1 space-y-4">
         {/* Cart Items */}
-        <div className="border rounded-md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Subtotal</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {items.map((item) => (
-                <TableRow key={item.product._id}>
-                  <TableCell className="font-medium">{item.product.name}</TableCell>
-                  <TableCell>${item.price.toFixed(2)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
+        <div className="border rounded-md h-[300px] flex flex-col">
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
+            <div className="col-span-5">Product</div>
+            <div className="col-span-2">Price</div>
+            <div className="col-span-2">Quantity</div>
+            <div className="col-span-2">Subtotal</div>
+            <div className="col-span-1"></div>
+          </div>
+
+          {/* Scrollable Items */}
+          <div className="flex-1 overflow-y-auto">
+            {items.length === 0 ? (
+              <div className="flex items-center justify-center h-full text-muted-foreground">
+                No items in cart
+              </div>
+            ) : (
+              <div className="divide-y">
+                {items.map((item) => (
+                  <div key={item.product._id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-muted/50">
+                    <div className="col-span-5 font-medium">{item.product.name}</div>
+                    <div className="col-span-2">${item.price.toFixed(2)}</div>
+                    <div className="col-span-2">
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => onUpdateQuantity(item.product._id, item.quantity - 1)}
+                          disabled={item.quantity <= 1}
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-8 text-center">{item.quantity}</span>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => onUpdateQuantity(item.product._id, item.quantity + 1)}
+                          disabled={item.quantity >= item.product.stock}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="col-span-2">${item.subtotal.toFixed(2)}</div>
+                    <div className="col-span-1">
                       <Button
-                        variant="outline"
+                        variant="ghost"
                         size="icon"
-                        className="h-8 w-8"
-                        onClick={() => onUpdateQuantity(item.product._id, item.quantity - 1)}
-                        disabled={item.quantity <= 1}
+                        onClick={() => onRemoveItem(item.product._id)}
                       >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <span className="w-8 text-center">{item.quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8"
-                        onClick={() => onUpdateQuantity(item.product._id, item.quantity + 1)}
-                        disabled={item.quantity >= item.product.stock}
-                      >
-                        <Plus className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
-                  </TableCell>
-                  <TableCell>${item.subtotal.toFixed(2)}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onRemoveItem(item.product._id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Discount Code */}

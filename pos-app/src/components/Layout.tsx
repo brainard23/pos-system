@@ -82,7 +82,7 @@ const Layout = ({ children }: LayoutProps) => {
 
         {/* Navigation */}
         <ScrollArea className="flex-1 px-2">
-          <nav className="space-y-1 py-2">
+          <nav className="space-y-1 py-2 px-1">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href;
               return (
@@ -105,7 +105,7 @@ const Layout = ({ children }: LayoutProps) => {
         </ScrollArea>
 
         {/* User Profile & Logout */}
-        <div className="mt-auto border-t">
+        <div className="mt-auto border-t p-2">
           <div className="p-4">
             <div className={cn("flex items-center gap-2", isCollapsed && "justify-center")}>
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -124,7 +124,7 @@ const Layout = ({ children }: LayoutProps) => {
             variant="ghost"
             className={cn(
               "w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-50",
-              isCollapsed && "justify-center px-2"
+              isCollapsed && "justify-center px-2 m-2"
             )}
             onClick={handleLogout}
           >

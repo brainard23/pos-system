@@ -15,7 +15,13 @@
   - Separated types into their own files
   - Improved code organization and maintainability
 - [x] add a dashboard page. this page contain sales, inventory, and other important KPI
-- [ ] add a transaction page UI
+- [x] add a transaction page UI
+- [x] make the transaction backend and wire it. there are 3 types of payment method 1 is cash, 2 is card, and 3 credit card.
+  - Created Transaction model with payment method support
+  - Implemented transaction controller with CRUD operations
+  - Added routes with validation and authentication
+  - Integrated with server and error handling
+  - Added stock management and transaction statistics
 - [ ] Enhance the Api calls in the Product page apply our rules in api calling
 - [ ] setup unit test use Jest
 - [ ] Enhance Products.tsx, remove repetitive components and make it reusable

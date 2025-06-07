@@ -85,7 +85,7 @@ export default function TransactionPage() {
   }, [addTransaction, cartItems, discountCode]);
 
   return (
-      <div className="p-4 h-[calc(100vh-4rem)]">
+      <div className="p-4" style={{ height: '100dvh'}}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
           {/* Products Section */}
           <div className="h-full">
@@ -96,7 +96,7 @@ export default function TransactionPage() {
           </div>
 
           {/* Transaction Cart Section */}
-          <div className="h-full">
+          <div className="">
             <TransactionCart
               items={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
