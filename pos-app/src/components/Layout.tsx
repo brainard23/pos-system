@@ -56,7 +56,7 @@ const Layout = ({ children }: LayoutProps) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "w-64 bg-card border-r transition-all duration-300 flex flex-col",
+          "w-64 bg-card border-r-red-500 transition-all duration-300 flex flex-col",
           isCollapsed && "w-16"
         )}
       >

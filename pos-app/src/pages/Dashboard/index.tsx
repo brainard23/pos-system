@@ -73,7 +73,7 @@ export default function DashboardPage() {
       
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -86,7 +86,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Products</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -99,7 +99,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Transactions</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -112,7 +112,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Low Stock Items</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
@@ -127,7 +127,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Profit Chart */}
-      <Card className="col-span-2">
+      <Card className="col-span-2 shadow-lg border-gray-300">
         <CardHeader>
           <CardTitle>Profit Overview</CardTitle>
         </CardHeader>
@@ -163,7 +163,7 @@ export default function DashboardPage() {
       </Card>
 
       {/* Recent Activity */}
-      <Card>
+      <Card className="col-span-2 shadow-lg border-gray-300">
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
