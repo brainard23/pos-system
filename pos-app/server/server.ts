@@ -7,6 +7,7 @@ import categoryRoutes from './routes/categories';
 import supplierRoutes from './routes/suppliers';
 import productRoutes from './routes/products';
 import transactionRoutes from './routes/transactions';
+import dashboardRoutes from './routes/dashboard';
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/suppliers', supplierRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

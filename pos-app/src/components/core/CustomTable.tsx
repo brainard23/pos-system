@@ -48,8 +48,8 @@ export function CustomTable<T>({ columns, data, isLoading, emptyMessage = 'No da
   }
 
   return (
-    <div className="rounded-md border">
-      <Table>
+    <div className="rounded-md border shadow-lg border-gray-300">
+      <Table className=''>
         <TableHeader>
           <TableRow>
             {columns.map((column, index) => (

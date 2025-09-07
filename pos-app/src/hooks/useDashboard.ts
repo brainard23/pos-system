@@ -8,7 +8,7 @@ export const useDashboard = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/dasboard', {
+      const response = await fetch('http://localhost:5000/api/dashboard', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

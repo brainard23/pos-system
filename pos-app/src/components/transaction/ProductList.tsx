@@ -45,7 +45,7 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
   }, [products, onSelectProduct]);
 
   return (
-    <Card className="">
+    <Card className="shadow-lg border-gray-300">
       <CardContent className="p-4">
         <div className="space-y-4">
           {/* Search, Barcode Scanner, and Category Tabs */}
@@ -83,7 +83,7 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
               <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           ) : (
-            <div className="border rounded-md h-[500px] flex flex-col">
+            <div className="border rounded-md h-[500px] flex flex-col shadow-lg border-gray-300">
               {/* Header */}
               <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
                 <div className="col-span-4">Product</div>

@@ -4,7 +4,7 @@ import { Activity, DollarSign, Package, TrendingUp } from 'lucide-react';
 import { DashboardStats, ProfitData, ActivityItem } from '@/types/dashboard';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDashboard } from '@/hooks/useDashboard';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Mock data for development
 const mockStats: DashboardStats = {
@@ -61,11 +61,26 @@ const mockActivity: ActivityItem[] = [
  */
 export default function DashboardPage() {
 
-  // const { fetchData }  = useDashboard();
+  const { fetchData }  = useDashboard();
+    const [data, setData] = useState<DashboardStats | null>(null); 
+    const hasFetched = useRef(false);
 
-  // useEffect(async () = {
-  //  await fetchData()
-  // }, [])
+    console.log('Dashboard data:', data);
+  useEffect(() => {
+      if (hasFetched.current) return;
+    hasFetched.current = true;
+
+    const fetch = async () => {
+      try {
+        const result = await fetchData(); 
+        setData(result); 
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetch();
+  }, []);
 
   return (
     <div className="p-6 space-y-6">
@@ -76,7 +91,7 @@ export default function DashboardPage() {
         <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="h-4 w-4 text-muted-foreground bg-green-500 rounded-full" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${mockStats.totalSales.toLocaleString()}</div>
@@ -89,10 +104,10 @@ export default function DashboardPage() {
         <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Products</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <Package className="h-4 w-4 text-muted-foreground bg-amber-500 rounded-full" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockStats.totalProducts}</div>
+            <div className="text-2xl font-bold">{data?.totalProducts}</div>
             <p className="text-xs text-muted-foreground">
               Products in inventory
             </p>
@@ -102,7 +117,7 @@ export default function DashboardPage() {
         <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Transactions</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-muted-foreground bg-blue-500 rounded-full" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mockStats.totalTransactions}</div>
@@ -115,7 +130,7 @@ export default function DashboardPage() {
         <Card className='shadow-lg border-gray-300'>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Low Stock Items</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
+            <Activity className="h-4 w-4 text-muted-foreground bg-pink-500 rounded-full" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mockStats.lowStockItems}</div>

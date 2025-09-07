@@ -16,7 +16,7 @@ const Search = ({ searchQuery, setQuery }: SearchProps) => {
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setQuery(e.target.value)
         }
-        className="w-64"
+        className="w-64 shadow-lg border-gray-300"
       />
     </>
   );

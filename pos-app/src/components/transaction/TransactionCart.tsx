@@ -54,13 +54,13 @@ export function TransactionCart({
   };
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col shadow-lg border-gray-300">
       <CardHeader>
         <CardTitle>Transaction Cart</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 space-y-4">
         {/* Cart Items */}
-        <div className="border rounded-md h-[300px] flex flex-col">
+        <div className="border rounded-md h-[300px] flex flex-col shadow-lg border-gray-300">
           {/* Header */}
           <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
             <div className="col-span-3">Product</div>
@@ -121,7 +121,7 @@ export function TransactionCart({
         </div>
 
         {/* Discount Code */}
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           <Label htmlFor="discount">Discount Code</Label>
           <div className="flex space-x-2">
             <Input
@@ -129,6 +129,7 @@ export function TransactionCart({
               placeholder="Enter discount code"
               value={discountCode}
               onChange={(e) => onDiscountCodeChange(e.target.value)}
+              className='shadow-lg border-gray-300'
             />
             <Button
               onClick={handleApplyDiscount}
@@ -155,7 +156,7 @@ export function TransactionCart({
               />
               <Label
                 htmlFor="cash"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary "
               >
                 <Banknote className="mb-3 h-6 w-6" />
                 Cash

@@ -223,7 +223,7 @@ export default function ProductsPage() {
                 Add Supplier
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl bg-white">
               <DialogHeader>
                 <DialogTitle>Add New Supplier</DialogTitle>
               </DialogHeader>
@@ -242,7 +242,7 @@ export default function ProductsPage() {
                 Add Category
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl bg-white">
               <DialogHeader>
                 <DialogTitle>Add New Category</DialogTitle>
               </DialogHeader>
@@ -261,7 +261,7 @@ export default function ProductsPage() {
           placeholder="Search products..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="max-w-sm"
+          className="max-w-sm shadow-lg border-gray-300"
         />
       </div>
 
@@ -274,7 +274,7 @@ export default function ProductsPage() {
 
       {/* Edit Product Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-white">
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>
           </DialogHeader>

@@ -9,30 +9,13 @@ import Product from '../models/Product';
  */
 export const getDashboard = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    // const page = parseInt(req.query.page as string) || 1;
-    // const limit = parseInt(req.query.limit as string) || 10;
-    // const search = req.query.search as string || '';
-
-    // const query = search
-    //   ? {
-    //       $or: [
-    //         { name: { $regex: search, $options: 'i' } },
-    //         { sku: { $regex: search, $options: 'i' } },
-    //         { description: { $regex: search, $options: 'i' } },
-    //       ],
-    //     }
-    //   : {};
+    const lowStockThreshold = 5;
 
     const total = await Product.countDocuments();
-    // const products = await Product.find(query)
-    //   .sort({ createdAt: -1 })
-    //   .skip((page - 1) * limit)
-    //   .limit(limit);
+    const lowStockItems = await Product.countDocuments({ stock: { $lt: lowStockThreshold } });
 
     res.json({
-    //   products,
-    //   currentPage: page,
-    //   totalPages: Math.ceil(total / limit),
+      lowStockItems: lowStockItems,
       totalProducts: total,
     });
   } catch (error) {
