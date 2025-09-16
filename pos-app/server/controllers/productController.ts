@@ -11,7 +11,7 @@ import Product from '../models/Product';
 export const getProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : 0; 
     const search = req.query.search as string || '';
 
     const query = search
@@ -25,10 +25,13 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
       : {};
 
     const total = await Product.countDocuments(query);
-    const products = await Product.find(query)
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
+
+    const productsQuery = Product.find(query).sort({ name: 1 }).skip((page - 1) * limit);
+
+    if (limit > 0) {
+    productsQuery.limit(limit);
+    }
+    const products = await productsQuery;
 
     res.json({
       products,

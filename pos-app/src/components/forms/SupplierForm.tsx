@@ -49,7 +49,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
             type="email"
             value={supplier.email}
             onChange={(e) => setSupplier({ ...supplier, email: e.target.value })}
-            required
+            
           />
         </div>
         <div className="space-y-2">
@@ -59,7 +59,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
             type="tel"
             value={supplier.phone}
             onChange={(e) => setSupplier({ ...supplier, phone: e.target.value })}
-            required
+            
           />
         </div>
       </div>
@@ -75,7 +75,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
               address: { ...supplier.address, street: e.target.value },
             })
           }
-          required
+          
         />
       </div>
 
@@ -91,7 +91,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
                 address: { ...supplier.address, city: e.target.value },
               })
             }
-            required
+            
           />
         </div>
         <div className="space-y-2">
@@ -105,7 +105,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
                 address: { ...supplier.address, state: e.target.value },
               })
             }
-            required
+            
           />
         </div>
       </div>
@@ -122,7 +122,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
                 address: { ...supplier.address, country: e.target.value },
               })
             }
-            required
+            
           />
         </div>
         <div className="space-y-2">
@@ -136,7 +136,7 @@ export function SupplierForm({ onSubmit, isLoading, onCancel }: SupplierFormProp
                 address: { ...supplier.address, zipCode: e.target.value },
               })
             }
-            required
+            
           />
         </div>
       </div>

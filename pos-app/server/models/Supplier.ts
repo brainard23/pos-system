@@ -24,7 +24,7 @@ const supplierSchema = new Schema({
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    // required: [true, 'Email is required'],
     unique: true,
     trim: true,
     lowercase: true,
@@ -32,29 +32,29 @@ const supplierSchema = new Schema({
   },
   phone: {
     type: String,
-    required: [true, 'Phone number is required'],
+    // required: [true, 'Phone number is required'],
     trim: true
   },
   address: {
     street: {
       type: String,
-      required: [true, 'Street address is required']
+      // required: [true, 'Street address is required']
     },
     city: {
       type: String,
-      required: [true, 'City is required']
+      // required: [true, 'City is required']
     },
     state: {
       type: String,
-      required: [true, 'State is required']
+      // required: [true, 'State is required']
     },
     country: {
       type: String,
-      required: [true, 'Country is required']
+      // required: [true, 'Country is required']
     },
     zipCode: {
       type: String,
-      required: [true, 'ZIP code is required']
+      // required: [true, 'ZIP code is required']
     }
   },
   isActive: {

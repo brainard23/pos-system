@@ -94,7 +94,7 @@ export default function DashboardPage() {
             <DollarSign className="h-4 w-4 text-muted-foreground bg-green-500 rounded-full" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${mockStats.totalSales.toLocaleString()}</div>
+            <div className="text-2xl font-bold">${data?.totalSales.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground">
               Total revenue this month
             </p>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
             <TrendingUp className="h-4 w-4 text-muted-foreground bg-blue-500 rounded-full" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockStats.totalTransactions}</div>
+            <div className="text-2xl font-bold">{data?.totalTransactions}</div>
             <p className="text-xs text-muted-foreground">
               Total transactions this month
             </p>
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             <Activity className="h-4 w-4 text-muted-foreground bg-pink-500 rounded-full" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockStats.lowStockItems}</div>
+            <div className="text-2xl font-bold">{data?.lowStockItems}</div>
             <p className="text-xs text-muted-foreground">
               Items needing restock
             </p>

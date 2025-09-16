@@ -29,6 +29,11 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const navigation = [
+     {
+      name: 'Home',
+      href: '/transactions',
+      icon: Receipt,
+    },
     {
       name: 'Dashboard',
       href: '/dashboard',
@@ -40,15 +45,11 @@ const Layout = ({ children }: LayoutProps) => {
       icon: Package,
     },
     {
-      name: 'Sales',
+      name: 'Transactions',
       href: '/sales',
       icon: ShoppingCart,
     },
-    {
-      name: 'Transactions',
-      href: '/transactions',
-      icon: Receipt,
-    },
+   
   ];
 
   return (
@@ -63,11 +64,14 @@ const Layout = ({ children }: LayoutProps) => {
         {/* Logo */}
         <div className="flex items-center justify-between px-4 py-3">
             <div className={cn("flex items-center gap-2", isCollapsed && "justify-center")}>
-              <img
+            <img
               src="https://scontent.fcgm1-1.fna.fbcdn.net/v/t39.30808-1/536281298_24368638892778920_410510631374461293_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=109&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeGpHI-sDEnry8hfpX9JztLsYel3teu_6Dph6Xe167_oOpGSA1sk-AgM8i2CSEchjZM&_nc_ohc=DXM3U4KZkywQ7kNvwGXWj3k&_nc_oc=AdlbJ9nLVIZH4gjiNJS7RHmLiW04fd2q2qqImKFOYMI68M9euqd-fl7arajrPw_ny7I&_nc_zt=24&_nc_ht=scontent.fcgm1-1.fna&_nc_gid=DMHyAtyU7Lcpoz2icwH5jg&oh=00_AfZeIkJoYBlGIGwRGJAnzMVz9yFTUfazXgFZ3sLwWsXNzw&oe=68C2FCFE"
               alt="EasyGear Moto Logo"
               className={cn("h-12 w-12 rounded-full object-cover", isCollapsed && "mx-auto")}
-              />
+            />
+            {!isCollapsed && (
+              <span className="text-lg font-bold tracking-tight">EasyGear Moto</span>
+            )}
             </div>
           {/* <Button
             variant="ghost"

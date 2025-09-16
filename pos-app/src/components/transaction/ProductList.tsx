@@ -62,19 +62,21 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
               </div>
               <BarcodeScanner onScan={handleBarcodeScan} />
             </div>
-            <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
-              <TabsList className="w-full justify-start">
+            <div className="overflow-x-auto">
+              <Tabs className="" value={selectedCategory} onValueChange={setSelectedCategory}>
+              <TabsList className="min-w-max flex-nowrap w-full justify-start" style={{ display: 'flex' }}>
                 {categories.map(category => (
-                  <TabsTrigger
-                    key={category}
-                    value={category}
-                    className="capitalize mr-1"
-                  >
-                    {category}
-                  </TabsTrigger>
+                <TabsTrigger
+                  key={category}
+                  value={category}
+                  className="capitalize mr-1"
+                >
+                  {category}
+                </TabsTrigger>
                 ))}
               </TabsList>
-            </Tabs>
+              </Tabs>
+            </div>
           </div>
 
           {/* Product Grid */}

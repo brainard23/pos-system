@@ -16,7 +16,6 @@ const router = express.Router();
 const validateProduct = [
   body('name').trim().notEmpty().withMessage('Product name is required'),
   body('description').trim().notEmpty().withMessage('Description is required'),
-  body('sku').trim().notEmpty().withMessage('SKU is required'),
   body('category').notEmpty().withMessage('Category is required'),
   body('price').isFloat({ min: 0 }).withMessage('Price must be a positive number'),
   body('cost').isFloat({ min: 0 }).withMessage('Cost must be a positive number'),

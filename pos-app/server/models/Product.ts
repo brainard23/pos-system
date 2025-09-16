@@ -29,7 +29,7 @@ const productSchema = new Schema({
   },
   sku: {
     type: String,
-    required: [true, 'SKU is required'],
+    // required: [false, 'SKU is required'],
     unique: true,
     trim: true
   },

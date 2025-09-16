@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Minus, Plus, Trash2, CreditCard, Banknote, Receipt } from 'lucide-react';
+import { Minus, Plus, Trash2, CreditCard, Banknote, Receipt, Trash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface TransactionCartProps {
@@ -106,8 +106,8 @@ export function TransactionCart({
                     <div className="col-span-2">${item.subtotal.toFixed(2)}</div>
                     <div className="col-span-1">
                       <Button
-                        variant="ghost"
-                        size="icon"
+                        // variant="ghost"
+                        // size="icon"
                         onClick={() => onRemoveItem(item.product._id)}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -194,7 +194,7 @@ export function TransactionCart({
         </div>
       </CardContent>
       <CardFooter className="space-y-4 border-t pt-4">
-        <div className="space-y-2 w-full">
+        <div className="space-y-2 w-full pr-6">
           <div className="flex justify-between text-sm">
             <span>Subtotal</span>
             <span>${subtotal.toFixed(2)}</span>

@@ -81,7 +81,6 @@ export function ProductForm({
             id="sku"
             value={product.sku}
             onChange={(e) => setProduct({ ...product, sku: e.target.value })}
-            required
           />
         </div>
       </div>
