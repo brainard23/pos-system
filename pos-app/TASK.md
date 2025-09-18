@@ -22,6 +22,10 @@
   - Added routes with validation and authentication
   - Integrated with server and error handling
   - Added stock management and transaction statistics
+- [x] Make a sales page that shows all completed transactions. This also shows the items that being sold by that transaction. 
+- [x] Make another page for our invistor. this page contains tab first tab is the list of our investor and how much they invest. the formula of of their investment is this monthlyPayment= principal+(principal×interest)​ / months. the 2nd tab will shows how their investment doing. we will be sending them an email this will be a cron that will activate every first day of the month. 
+	​
+
 - [ ] Enhance the Api calls in the Product page apply our rules in api calling
 - [ ] setup unit test use Jest
 - [ ] Enhance Products.tsx, remove repetitive components and make it reusable

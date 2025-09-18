@@ -17,7 +17,7 @@ const validateTransaction = [
   body('items').isArray().withMessage('Items must be an array'),
   body('items.*.product').isMongoId().withMessage('Invalid product ID'),
   body('items.*.quantity').isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
-  body('paymentMethod').isIn(['cash', 'card', 'credit_card']).withMessage('Invalid payment method'),
+  body('paymentMethod').isIn(['cash', 'gcash', 'credit_card', 'card']).withMessage('Invalid payment method'),
   body('discount').optional().isObject().withMessage('Discount must be an object'),
   body('discount.type').optional().isIn(['percentage', 'fixed']).withMessage('Invalid discount type'),
   body('discount.value').optional().isFloat({ min: 0 }).withMessage('Discount value must be a positive number'),

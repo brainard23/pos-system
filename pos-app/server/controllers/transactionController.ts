@@ -33,7 +33,7 @@ export const getTransactions = async (req: Request, res: Response, next: NextFun
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate('items.product', 'name sku price');
+      .populate('items.product', 'name sku price cost');
 
     res.json({
       transactions,
@@ -55,7 +55,7 @@ export const getTransactions = async (req: Request, res: Response, next: NextFun
 export const getTransaction = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const transaction = await Transaction.findById(req.params.id)
-      .populate('items.product', 'name sku price');
+      .populate('items.product', 'name sku price cost');
 
     if (!transaction) {
       res.status(404).json({ message: 'Transaction not found' });
@@ -130,7 +130,7 @@ export const createTransaction = async (req: Request, res: Response, next: NextF
     await transaction.save();
 
     // Populate product details in response
-    await transaction.populate('items.product', 'name sku price');
+    await transaction.populate('items.product', 'name sku price cost');
 
     res.status(201).json(transaction);
   } catch (error) {

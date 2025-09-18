@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Product } from '@/types/product';
 import { TransactionItem, PaymentMethod } from '@/types/transaction';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Minus, Plus, Trash2, CreditCard, Banknote, Receipt, Trash } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface TransactionCartProps {
@@ -31,7 +30,7 @@ export function TransactionCart({
   discountCode,
   onDiscountCodeChange,
 }: TransactionCartProps) {
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash');
+  const [selectedPayment, setSelectedPayment] = useState<'cash' | 'gcash' | 'credit_card'>('cash');
   const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
@@ -50,7 +49,7 @@ export function TransactionCart({
 
   const handleCompleteTransaction = async () => {
     if (items.length === 0) return;
-    await onCompleteTransaction(paymentMethod);
+    await onCompleteTransaction(selectedPayment as PaymentMethod);
   };
 
   return (
@@ -71,7 +70,7 @@ export function TransactionCart({
           </div>
 
           {/* Scrollable Items */}
-          <div className="flex-1 overflow-y-auto">
+          <ScrollArea className="flex-1">
             {items.length === 0 ? (
               <div className="flex items-center justify-center h-full text-muted-foreground">
                 No items in cart
@@ -117,7 +116,7 @@ export function TransactionCart({
                 ))}
               </div>
             )}
-          </div>
+          </ScrollArea>
         </div>
 
         {/* Discount Code */}
@@ -140,57 +139,31 @@ export function TransactionCart({
           </div>
         </div>
 
-        {/* Payment Method */}
+        {/* Payment Method (text-only, highlight selected) */}
         <div className="space-y-2">
           <Label>Payment Method</Label>
-          <RadioGroup
-            value={paymentMethod}
-            onValueChange={(value: string) => setPaymentMethod(value as PaymentMethod)}
-            className="grid grid-cols-3 gap-4"
-          >
-            <div>
-              <RadioGroupItem
-                value="cash"
-                id="cash"
-                className="peer sr-only"
-              />
-              <Label
-                htmlFor="cash"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary "
+          <div className="grid grid-cols-3 gap-2">
+            {([
+              { key: 'cash', label: 'Cash' },
+              { key: 'gcash', label: 'Gcash' },
+              { key: 'credit_card', label: 'Credit Card' },
+            ] as const).map(opt => (
+              <button
+                key={opt.key}
+                type="button"
+                onClick={() => setSelectedPayment(opt.key)}
+                className={cn(
+                  'rounded-md border px-3 py-2 text-sm transition',
+                  selectedPayment === opt.key
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-muted hover:bg-accent hover:text-accent-foreground'
+                )}
               >
-                <Banknote className="mb-3 h-6 w-6" />
-                Cash
-              </Label>
-            </div>
-            <div>
-              <RadioGroupItem
-                value="card"
-                id="card"
-                className="peer sr-only"
-              />
-              <Label
-                htmlFor="card"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-              >
-                <CreditCard className="mb-3 h-6 w-6" />
-                Card
-              </Label>
-            </div>
-            <div>
-              <RadioGroupItem
-                value="credit_card"
-                id="credit_card"
-                className="peer sr-only"
-              />
-              <Label
-                htmlFor="credit_card"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-              >
-                <Receipt className="mb-3 h-6 w-6" />
-                Credit Card
-              </Label>
-            </div>
-          </RadioGroup>
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <div className="text-xs text-muted-foreground">Selected payment method will be used for the transaction.</div>
         </div>
       </CardContent>
       <CardFooter className="space-y-4 border-t pt-4">

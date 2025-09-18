@@ -2,9 +2,9 @@ import { useState, useMemo, useCallback } from 'react';
 import { Product } from '@/types/product';
 import { useProducts } from '@/hooks/useProducts';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Loader2, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BarcodeScanner } from './BarcodeScanner';
@@ -62,21 +62,21 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
               </div>
               <BarcodeScanner onScan={handleBarcodeScan} />
             </div>
-            <div className="overflow-x-auto">
-              <Tabs className="" value={selectedCategory} onValueChange={setSelectedCategory}>
-              <TabsList className="min-w-max flex-nowrap w-full justify-start" style={{ display: 'flex' }}>
-                {categories.map(category => (
-                <TabsTrigger
-                  key={category}
-                  value={category}
-                  className="capitalize mr-1"
-                >
-                  {category}
-                </TabsTrigger>
-                ))}
-              </TabsList>
+            <ScrollArea className="w-full whitespace-nowrap rounded-md border p-1">
+              <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
+                <TabsList className="min-w-max flex-nowrap w-full justify-start px-1 py-2 inline-flex">
+                  {categories.map(category => (
+                    <TabsTrigger
+                      key={category}
+                      value={category}
+                      className="capitalize mr-1"
+                    >
+                      {category}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
               </Tabs>
-            </div>
+            </ScrollArea>
           </div>
 
           {/* Product Grid */}
@@ -88,15 +88,15 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
             <div className="border rounded-md h-[500px] flex flex-col shadow-lg border-gray-300">
               {/* Header */}
               <div className="grid grid-cols-12 gap-4 p-4 bg-muted/50 font-medium text-sm border-b">
-                <div className="col-span-4">Product</div>
-                <div className="col-span-2">Barcode</div>
+                <div className="col-span-6">Product</div>
+                {/* <div className="col-span-2">Barcode</div> */}
                 <div className="col-span-2">Price</div>
                 <div className="col-span-2">Stock</div>
                 <div className="col-span-2">Category</div>
               </div>
 
               {/* Scrollable Items */}
-              <div className="flex-1 overflow-y-auto">
+              <ScrollArea className="flex-1">
                 {filteredProducts.length === 0 ? (
                   <div className="flex items-center justify-center h-full text-muted-foreground">
                     No products found
@@ -115,8 +115,8 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
                           onClick={() => onSelectProduct(product)}
                     
                         >
-                          <div className="col-span-4 font-medium truncate">{product.name}</div>
-                          <div className="col-span-2 text-sm text-muted-foreground truncate">{product.barcode}</div>
+                          <div className="col-span-6 text-sm font-medium">{product.name}</div>
+                          {/* <div className="col-span-2 text-sm text-muted-foreground truncate">{product.barcode}</div> */}
                           <div className="col-span-2 font-medium">${product.price.toFixed(2)}</div>
                           <div className="col-span-2 text-sm text-muted-foreground">
                             {product.stock} {product.unit}
@@ -129,7 +129,7 @@ export function ProductList({ onSelectProduct, selectedProducts }: ProductListPr
                     })}
                   </div>
                 )}
-              </div>
+              </ScrollArea>
             </div>
           )}
         </div>

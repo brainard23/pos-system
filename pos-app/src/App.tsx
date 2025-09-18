@@ -4,6 +4,8 @@ import Layout from './components/Layout';
 import ProductsPage from './pages/product';
 import DashboardPage from './pages/Dashboard';
 import TransactionPage from './pages/Transaction';
+import SalesPage from './pages/Sales';
+import InvestorsPage from './pages/Investors';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { isAuthenticated } from './services/authService';
 import LoginPage from './pages/Login';
@@ -39,6 +41,8 @@ function App() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="transactions" element={<TransactionPage />} />
+          <Route path="sales" element={<SalesPage />} />
+          <Route path="investors" element={<InvestorsPage />} />
           {/* Add other protected routes here */}
         </Route>
 

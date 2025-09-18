@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_URL } from '@/services/api';
 import toast from 'react-hot-toast';
 
 export const useDashboard = () => {
@@ -8,7 +9,7 @@ export const useDashboard = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/dashboard', {
+      const response = await fetch(`${API_URL}/dashboard`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -23,7 +24,7 @@ export const useDashboard = () => {
       
       return data;
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to fetch categories');
+      toast.error(error instanceof Error ? error.message : 'Failed to fetch dashboard');
       throw error;
     } finally {
       setIsLoading(false);
@@ -34,5 +35,6 @@ export const useDashboard = () => {
 
   return {
     fetchData,
+    isLoading,
   };
 }; 

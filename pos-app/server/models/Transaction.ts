@@ -14,7 +14,7 @@ export interface IDiscount {
   code?: string;
 }
 
-export type PaymentMethod = 'cash' | 'card' | 'credit_card';
+export type PaymentMethod = 'cash' | 'gcash' | 'credit_card' | 'card';
 
 export interface ITransaction extends Document {
   items: ITransactionItem[];
@@ -100,7 +100,7 @@ const transactionSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['cash', 'card', 'credit_card'],
+    enum: ['cash', 'gcash', 'credit_card', 'card'],
     required: [true, 'Payment method is required']
   },
   status: {

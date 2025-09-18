@@ -8,6 +8,11 @@ import { Transaction, NewTransaction, TransactionFilters, Discount } from '../ty
  */
 export async function fetchTransactions(filters?: TransactionFilters): Promise<Transaction[]> {
   const queryParams = new URLSearchParams();
+  // Ensure we fetch enough records for summary calculations
+  if (!filters?.startDate && !filters?.endDate) {
+    queryParams.set('page', '1');
+    queryParams.set('limit', '1000');
+  }
   if (filters?.startDate) queryParams.append('startDate', filters.startDate);
   if (filters?.endDate) queryParams.append('endDate', filters.endDate);
   if (filters?.status) queryParams.append('status', filters.status);
@@ -25,7 +30,12 @@ export async function fetchTransactions(filters?: TransactionFilters): Promise<T
     throw new Error(error.message || 'Failed to fetch transactions');
   }
 
-  return response.json();
+  const data = await response.json();
+  // Normalize: backend may return { transactions, ...pagination }
+  // or a raw array. Always return an array of Transaction.
+  if (Array.isArray(data)) return data as Transaction[];
+  if (Array.isArray(data?.transactions)) return data.transactions as Transaction[];
+  return [];
 }
 
 /**

@@ -16,6 +16,8 @@ export interface DashboardStats {
   totalSales: number;
   totalTransactions: number;
   lowStockItems: number;
+  profitSeries?: { month: string; profit: number }[];
+  recentActivity?: ActivityItem[];
 }
 
 /**

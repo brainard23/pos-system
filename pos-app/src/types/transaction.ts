@@ -1,6 +1,6 @@
 import { Product } from './product';
 
-export type PaymentMethod = 'cash' | 'card' | 'credit_card';
+export type PaymentMethod = 'cash' | 'gcash' | 'card' | 'credit_card';
 
 export interface TransactionItem {
   product: Product;

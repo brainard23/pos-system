@@ -1,59 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Activity, DollarSign, Package, TrendingUp } from 'lucide-react';
-import { DashboardStats, ProfitData, ActivityItem } from '@/types/dashboard';
+import { DashboardStats, ProfitData } from '@/types/dashboard';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDashboard } from '@/hooks/useDashboard';
 import { useEffect, useRef, useState } from 'react';
 
-// Mock data for development
-const mockStats: DashboardStats = {
-  totalSales: 12500,
-  totalProducts: 156,
-  totalTransactions: 89,
-  lowStockItems: 12
-};
-
-const mockProfitData: ProfitData[] = [
-  { month: 'Jan', profit: 4000 },
-  { month: 'Feb', profit: 3000 },
-  { month: 'Mar', profit: 2000 },
-  { month: 'Apr', profit: 2780 },
-  { month: 'May', profit: 1890 },
-  { month: 'Jun', profit: 2390 },
-  { month: 'Jul', profit: 3490 }
-];
-
-const mockActivity: ActivityItem[] = [
-  {
-    action: 'Sale',
-    item: 'Product A',
-    amount: '$120.00',
-    time: '2 minutes ago',
-    icon: TrendingUp
-  },
-  {
-    action: 'Stock Update',
-    item: 'Product B',
-    amount: '+50 units',
-    time: '1 hour ago',
-    icon: Package
-  },
-  {
-    action: 'New Product',
-    item: 'Product C',
-    amount: 'Added',
-    time: '3 hours ago',
-    icon: Activity
-  },
-  {
-    action: 'Sale',
-    item: 'Product D',
-    amount: '$85.00',
-    time: '5 hours ago',
-    icon: TrendingUp
-  }
-];
+const emptyProfit: ProfitData[] = [];
 
 /**
  * Dashboard page component displaying key metrics and recent activity
@@ -149,7 +102,7 @@ export default function DashboardPage() {
         <CardContent>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mockProfitData}>
+              <LineChart data={(data?.profitSeries || emptyProfit)}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -193,10 +146,9 @@ export default function DashboardPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockActivity.map((activity, index) => (
+              {(data?.recentActivity || []).map((activity, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium flex items-center gap-2">
-                    <activity.icon className="h-4 w-4" />
                     {activity.action}
                   </TableCell>
                   <TableCell>{activity.item}</TableCell>
